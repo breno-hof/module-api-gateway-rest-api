@@ -9,7 +9,7 @@ This Terraform module provisions an AWS API Gateway V2 (HTTP or WebSocket) along
 
 ```hcl
 module "apigateway_v2" {
-  source = "./modules/apigateway_v2"
+  source = "github.com/breno-hof/module-api-gateway-rest-api//src?ref=0.0.2"
 
   aws_region                             = "us-east-1"
   apigateway_v2_name                     = "my-api-gateway"
