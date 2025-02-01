@@ -2,7 +2,7 @@ resource "aws_apigatewayv2_api" "this" {
 	name						= var.apigateway_v2_name
 	protocol_type				= var.apigateway_v2_protocol_type
 	route_selection_expression	= var.apigateway_v2_protocol_type == "WEBSOCKET" ? var.apigateway_v2_route_selection_expression : null
-	body = file("${path.module}/${var.openapi_file_path}")
+	body 						= file("${path.module}/${var.openapi_file_path}")
 }
 
 resource "aws_apigatewayv2_authorizer" "this" {
