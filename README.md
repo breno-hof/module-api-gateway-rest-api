@@ -39,7 +39,7 @@ module "apigateway_v2" {
 | `apigateway_v2_websocket_identity_sources` | `list(string)` | `null` | The AWS API Gateway V2 WebSocket identity sources. |
 | `apigateway_v2_authorizer_name` | `string` | N/A | The AWS API Gateway V2 authorizer name. |
 | `use_jwt_authorizer` | `object({ audience = list(string), issuer = string })` | `null` | JWT configuration settings, including audience and issuer. |
-| `openapi_file_path` | `string` | `"openapi.json"` | The AWS API Gateway V2 OpenAPI specification file path. |
+| `openapi_file_path` | `string` | N/A | The AWS API Gateway V2 OpenAPI specification file path. |
 | `apigateway_v2_stage_name` | `string` | N/A | The AWS API Gateway V2 stage name. |
 | `apigateway_v2_vpc_link_name` | `string` | N/A | The AWS API Gateway V2 VPC Link name. |
 | `security_groups_ids` | `set(string)` | N/A | The security group IDs associated with the VPC Link. |

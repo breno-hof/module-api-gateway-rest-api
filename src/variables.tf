@@ -44,7 +44,6 @@ variable "use_jwt_authorizer" {
 variable "openapi_file_path" {
 	description		= "The AWS API Gateway V2 openapi filename"
 	type			= string
-	default			= "openapi.json"
 }
 
 variable "apigateway_v2_stage_name" {
