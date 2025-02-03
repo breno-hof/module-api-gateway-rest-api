@@ -5,12 +5,12 @@ output "aws_apigatewayv2_vpc_link_id" {
 
 output "aws_apigatewayv2_stage_id" {
 	description	= "ID of the API Gateway Stage"
-	value		= aws_apigatewayv2_stage.this.id
+	value		= aws_apigatewayv2_stage.this[0].id
 }
 
 output "aws_apigatewayv2_deployment_id" {
 	description	= "ID of the API Gateway Deployment"
-	value		= aws_apigatewayv2_deployment.this.id
+	value		= aws_apigatewayv2_deployment.this[0].id
 }
 
 output "aws_apigatewayv2_authorizer_id" {

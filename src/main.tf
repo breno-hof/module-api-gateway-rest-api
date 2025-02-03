@@ -42,7 +42,7 @@ resource "aws_apigatewayv2_authorizer" "this" {
 	authorizer_result_ttl_in_seconds			= var.authorizer.result_ttl_in_seconds
 	authorizer_type								= var.authorizer.type
 	authorizer_uri								= var.authorizer.uri
-	enable_simple_responses						= var.authroizer.enable_simple_responses
+	enable_simple_responses						= var.authorizer.enable_simple_responses
 	identity_sources							= var.authorizer.identity_sources
 
 	dynamic "jwt_configuration" {
@@ -54,36 +54,54 @@ resource "aws_apigatewayv2_authorizer" "this" {
 	}
 
 	depends_on									= [
-		aws_apigatewayv2_api.this
-	]
-}
-
-resource "aws_apigatewayv2_deployment" "this" {
-	api_id						= aws_apigatewayv2_api.this.id
-	
-	lifecycle {
-		create_before_destroy	= true
-	}
-
-	depends_on					= [
-		aws_apigatewayv2_api.this
+		aws_apigatewayv2_api.this,
 	]
 }
 
 resource "aws_apigatewayv2_stage" "this" {
-	api_id						= aws_apigatewayv2_api.this.id
-	name						= var.apigateway_v2_stage_name
-	deployment_id				= aws_apigatewayv2_deployment.this.id
+	count										= var.create_stage ? 1 : 0
 
-	depends_on					= [
+	api_id										= aws_apigatewayv2_api.this.id
+
+	auto_deploy									= local.is_http ? true : null
+	client_certificate_id						= local.is_websocket ? var.stage_client_certificate_id : null
+
+	deployment_id								= local.is_http ? null : try(aws_apigatewayv2_deployment.this[0].id, null)
+	description									= var.stage_description
+	name										= var.stage_name
+
+	stage_variables								= var.stage_variables
+
+	tags										= var.tags
+}
+
+resource "aws_apigatewayv2_deployment" "this" {
+	count										= var.create_stage && var.deploy_stage && !local.is_http ? 1 : 0
+
+	api_id										= aws_apigatewayv2_api.this.id
+	description									= var.description
+
+	triggers = {
+		redeployment							= sha1(join(",", tolist([
+			jsonencode(aws_apigatewayv2_api.this.body),
+		])))
+	}
+
+	lifecycle {
+		create_before_destroy					= true
+	}
+	
+	depends_on									= [
 		aws_apigatewayv2_api.this,
-		aws_apigatewayv2_deployment.this
 	]
 }
 
 resource "aws_apigatewayv2_vpc_link" "this" {
-	count						= var.create_vpc_link ? 1 : 0
-	name						= var.apigateway_v2_vpc_link_name
-	security_group_ids			= var.security_groups_ids
-	subnet_ids					= var.subnet_ids
+	count										= var.create_vpc_link ? 1 : 0
+
+	name										= "${var.name}-vpc-link"
+	security_group_ids							= var.security_groups_ids
+	subnet_ids									= var.subnet_ids
+
+	tags										= var.tags
 }

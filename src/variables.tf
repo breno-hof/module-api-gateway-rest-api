@@ -22,8 +22,8 @@ variable "api_key_selection_expression" {
 }
 
 variable "openapi_file_path" {
-	description		= "The AWS API Gateway V2 openapi filename"
-	type			= string
+	description					= "The AWS API Gateway V2 openapi filename"
+	type						= string
 }
 
 variable "cors_configuration" {
@@ -81,12 +81,6 @@ variable "target" {
 	default						= null
 }
 
-variable "websocket_identity_sources" {
-	description					= "The AWS API Gateway V2 websocket identity sources"
-	type						= list(string)
-	default						= null
-}
-
 variable "api_version" {
 	description					= "A version identifier for the API. Must be between 1 and 64 characters in length"
 	type						= string
@@ -111,28 +105,54 @@ variable "authorizer" {
 	default						= {}
 }
 
-variable "apigateway_v2_stage_name" {
-	description		= "The AWS API Gateway V2 stage name"
-	type			= string
+variable "create_stage" {
+	description					= "Whether to create default stage"
+	type						= bool
+	default						= true
 }
 
-variable "apigateway_v2_vpc_link_name" {
-	description		= "The AWS API Gateway V2 vpc link name"
-	type			= string
+variable "stage_client_certificate_id" {
+	description					= "The identifier of a client certificate for the stage. Use the `aws_api_gateway_client_certificate` resource to configure a client certificate. Supported only for WebSocket APIs"
+	type						= string
+	default						= null
+}
+
+variable "stage_description" {
+	description					= "The description for the stage. Must be less than or equal to 1024 characters in length"
+	type						= string
+	default						= null
+}
+
+variable "stage_name" {
+	description					= "The name of the stage. Must be between 1 and 128 characters in length"
+	type						= string
+	default						= "$default"
+}
+
+variable "stage_variables" {
+	description					= "A map that defines the stage variables for the stage"
+	type						= map(string)
+	default						= {}
+}
+
+variable "deploy_stage" {
+	description					= "Whether to deploy the stage. `HTTP` APIs are auto-deployed by default"
+	type						= bool
+	default						= true
 }
 
 variable "security_groups_ids" {
-	description		= "The AWS API Gateway V2 vpc link name"
-	type			= set(string)
+	description					= "The AWS API Gateway V2 vpc link name"
+	type						= set(string)
 }
 
 variable "subnet_ids" {
-	description		= "The AWS API Gateway V2 vpc link name"
-	type			= set(string)
+	description					= "The AWS API Gateway V2 vpc link name"
+	type						= set(string)
 }
 
 variable "create_vpc_link" {
-	description		= "Flag to determine if a VPC Link should be created"
-	type			= bool
-	default			= false
+	description					= "Flag to determine if a VPC Link should be created"
+	type						= bool
+	default						= false
 }
