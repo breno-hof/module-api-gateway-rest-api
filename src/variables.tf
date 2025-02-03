@@ -126,7 +126,7 @@ variable "stage_description" {
 variable "stage_name" {
 	description					= "The name of the stage. Must be between 1 and 128 characters in length"
 	type						= string
-	default						= "$default"
+	default						= "dev"
 }
 
 variable "stage_variables" {
@@ -142,13 +142,15 @@ variable "deploy_stage" {
 }
 
 variable "security_groups_ids" {
-	description					= "The AWS API Gateway V2 vpc link name"
+	description					= "The AWS API Gateway V2 vpc link security groups ids"
 	type						= set(string)
+	default = []
 }
 
 variable "subnet_ids" {
-	description					= "The AWS API Gateway V2 vpc link name"
+	description					= "The AWS API Gateway V2 vpc link subnet ids"
 	type						= set(string)
+	default = []
 }
 
 variable "create_vpc_link" {
