@@ -10,7 +10,7 @@ output "aws_apigatewayv2_stage_id" {
 
 output "aws_apigatewayv2_deployment_id" {
 	description	= "ID of the API Gateway Deployment"
-	value		= aws_apigatewayv2_deployment.this[0].id
+	value		= var.create_stage && var.deploy_stage && !local.is_http ? aws_apigatewayv2_deployment.this[0].id : null
 }
 
 output "aws_apigatewayv2_authorizer_id" {
