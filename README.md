@@ -16,7 +16,7 @@ locals {
 }
 
 module "apigateway_v2" {
-	source = "github.com/breno-hof/module-api-gateway-rest-api//src?ref=1.0.0"
+	source = "github.com/breno-hof/module-api-gateway-v2-api//src?ref=1.0.0"
 
 	name					= "${local.name}-api-gateway-v2"
 	openapi_file_path		= local.openapi_file_path
